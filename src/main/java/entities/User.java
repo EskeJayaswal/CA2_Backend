@@ -3,14 +3,7 @@ package entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.mindrot.jbcrypt.BCrypt;
@@ -25,16 +18,35 @@ public class User implements Serializable {
   @NotNull
   @Column(name = "user_name", length = 25)
   private String userName;
+
   @Basic(optional = false)
   @NotNull
   @Size(min = 1, max = 255)
   @Column(name = "user_pass")
   private String userPass;
+
   @JoinTable(name = "user_roles", joinColumns = {
     @JoinColumn(name = "user_name", referencedColumnName = "user_name")}, inverseJoinColumns = {
     @JoinColumn(name = "role_name", referencedColumnName = "role_name")})
   @ManyToMany
   private List<Role> roleList = new ArrayList<>();
+
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "profile_id", referencedColumnName = "id")
+  private Profile profile;
+
+
+
+  public User(String userName, String userPass) {
+    this.userName = userName;
+    this.userPass = BCrypt.hashpw(userPass, BCrypt.gensalt());
+  }
+
+  public User(String userName) {
+    this.userName = userName;
+  }
+
+  public User() {}
 
   public List<String> getRolesAsStrings() {
     if (roleList.isEmpty()) {
@@ -47,19 +59,10 @@ public class User implements Serializable {
     return rolesAsStrings;
   }
 
-  public User() {}
-
-  //TODO Change when password is hashed
    public boolean verifyPassword(String pw) {
 
         return(BCrypt.checkpw(pw, userPass));
     }
-
-  public User(String userName, String userPass) {
-    this.userName = userName;
-
-    this.userPass = BCrypt.hashpw(userPass, BCrypt.gensalt());
-  }
 
 
   public String getUserName() {
@@ -90,4 +93,11 @@ public class User implements Serializable {
     roleList.add(userRole);
   }
 
+  public Profile getProfile() {
+    return profile;
+  }
+
+  public void setProfile(Profile profile) {
+    this.profile = profile;
+  }
 }

@@ -1,0 +1,13 @@
+GET http://localhost:8080/devops_starter_war_exploded/api/profile/1
+Content-Type: application/json
+
+
+###
+PUT http://localhost:8080/devops_starter_war_exploded/api/profile/1
+Content-Type: application/json
+
+{
+  "firstName": "Allan",
+  "lastName": "Andersen",
+  "email": "AA@mail.com"
+}

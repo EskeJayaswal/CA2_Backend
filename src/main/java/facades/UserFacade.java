@@ -43,4 +43,16 @@ public class UserFacade {
         return user;
     }
 
+    // TODO: Is this a bad safety issue?
+    public User getUserByUserName(String username) {
+        EntityManager em = emf.createEntityManager();
+        User user;
+        try {
+            user = em.find(User.class, username);
+        } finally {
+            em.close();
+        }
+        return user;
+    }
+
 }

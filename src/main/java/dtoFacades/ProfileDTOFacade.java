@@ -48,8 +48,10 @@ public class ProfileDTOFacade implements IFacade<ProfileDTO> {
 
     @Override
     public ProfileDTO update(ProfileDTO profileDTO) throws EntityNotFoundException {
-        Profile profile = new Profile(profileDTO.getFirstName(), profileDTO.getLastName(), profileDTO.getEmail());
+        //Profile profile = new Profile(profileDTO.getFirstName(), profileDTO.getLastName(), profileDTO.getEmail());
+        Profile profile = profileDTO.getEntity();
         profile.setId(profileDTO.getId());
+        System.out.println(profile);
         Profile p = profileFacade.update(profile);
         return new ProfileDTO(p);
     }
@@ -61,5 +63,10 @@ public class ProfileDTOFacade implements IFacade<ProfileDTO> {
 
     public ProfileDTO addRelation(int id1, int id2) throws EntityNotFoundException {
        return new ProfileDTO(profileFacade.addRelation(id1, id2));
+    }
+
+    @Override
+    public ProfileDTO removeRelation(int id1, int id2) throws EntityNotFoundException {
+        return new ProfileDTO(profileFacade.removeRelation(id1, id2));
     }
 }

@@ -79,4 +79,9 @@ public class RenameMeDTOFacade implements IFacade<RenameMeDTO> {
     public RenameMeDTO addRelation(int id1, int id2) throws EntityNotFoundException {
         return null;
     }
+
+    @Override
+    public RenameMeDTO removeRelation(int id1, int id2) throws EntityNotFoundException {
+        return null;
+    }
 }

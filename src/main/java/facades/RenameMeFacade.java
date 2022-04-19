@@ -90,4 +90,9 @@ public class RenameMeFacade implements IFacade<RenameMe>{
     public RenameMe addRelation(int id1, int id2) throws EntityNotFoundException {
         return null;
     }
+
+    @Override
+    public RenameMe removeRelation(int id1, int id2) throws EntityNotFoundException {
+        return null;
+    }
 }

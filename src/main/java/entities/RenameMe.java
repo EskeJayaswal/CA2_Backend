@@ -65,9 +65,6 @@ public class RenameMe implements Serializable {
 
     public void addProfile(Profile profile) {
         this.profileList.add(profile);
-        if(!profile.getRenameMesList().contains(this)){
-            profile.addRenameMe(this);
-        }
     }
 
     @Override
@@ -75,8 +72,7 @@ public class RenameMe implements Serializable {
         return "RenameMe{" +
                 "id=" + id +
                 ", dummyStr1='" + dummyStr1 + '\'' +
-                ", dummyStr2='" + dummyStr2 + '\'' +
-                ", profileList=" + profileList +
+                ", dummyStr2='" + dummyStr2 +
                 '}';
     }
 }

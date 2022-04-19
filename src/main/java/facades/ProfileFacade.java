@@ -114,4 +114,29 @@ public class ProfileFacade implements IFacade<Profile>{
             em.close();
         }
     }
+
+    @Override
+    public Profile removeRelation(int id1, int id2) throws EntityNotFoundException {
+        EntityManager em = emf.createEntityManager();
+        try{
+            Profile profile = em.find(Profile.class, id1);
+            if(profile == null){
+                throw new EntityNotFoundException("Profile with ID: " + id1 + " not found");
+            }
+            RenameMe renameMe = em.find(RenameMe.class, id2);
+            if(renameMe == null){
+                throw new EntityNotFoundException("RENAMEME with ID: " + id2 + " not found");
+            }
+            profile.removeRenameMe(renameMe);
+
+            em.getTransaction().begin();
+            Profile updated = em.merge(profile);
+//            em.merge(renameMe);
+            em.getTransaction().commit();
+            return updated;
+        } finally {
+            em.close();
+        }
+    }
 }
+

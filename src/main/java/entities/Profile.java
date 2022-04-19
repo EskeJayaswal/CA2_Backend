@@ -1,6 +1,5 @@
 package entities;
 
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -100,4 +99,23 @@ public class Profile implements Serializable {
 
     }
 
+    public void removeRenameMe(RenameMe renameMe) {
+        this.renameMesList.remove(renameMe);
+        if(!renameMe.getProfileList().contains(this))
+            renameMe.getProfileList().remove(this);
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "Profile{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", user=" + user +
+                ", renameMesList=" + renameMesList +
+                '}';
+    }
 }

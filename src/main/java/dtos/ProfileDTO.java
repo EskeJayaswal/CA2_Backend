@@ -1,6 +1,7 @@
 package dtos;
 
 import entities.Profile;
+import entities.RenameMe;
 import entities.User;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class ProfileDTO {
     private String firstName;
     private String lastName;
     private String email;
-    private List<Integer> renameMeIDs = new ArrayList<>(); // List of IDs.
+    private List<RenameMeDTO> renameMeDTOS = new ArrayList<>(); // List of IDs.
 
 
     public ProfileDTO(Profile profile) {
@@ -21,18 +22,22 @@ public class ProfileDTO {
         this.firstName = profile.getFirstName();
         this.lastName = profile.getLastName();
         this.email = profile.getEmail();
-        profile.getRenameMesList().forEach(renameMe->this.renameMeIDs.add(renameMe.getId()));
+        for (RenameMe renameMe : profile.getRenameMesList()) {
+            this.renameMeDTOS.add(new RenameMeDTO(renameMe));
+        }
     }
 
-    // TODO: Might need to do something about the userName!?
+
     public Profile getEntity() {
         Profile p = new Profile(this.firstName, this.lastName, this.email);
+        this.renameMeDTOS.forEach(renameMeDTO -> p.addRenameMe(renameMeDTO.getEntity()));
         return p;
     }
 
     public static List<ProfileDTO> toList(List<Profile> profiles) {
         return profiles.stream().map(ProfileDTO::new).collect(Collectors.toList());
     }
+
 
 
     public int getId() {
@@ -69,7 +74,18 @@ public class ProfileDTO {
         this.email = email;
     }
 
-    public List<Integer> getRenameMeIDs() {
-        return renameMeIDs;
+    public List<RenameMeDTO> getRenameMeDTOS() {
+        return renameMeDTOS;
+    }
+
+    @Override
+    public String toString() {
+        return "ProfileDTO{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", renameMeDTOS=" + renameMeDTOS +
+                '}';
     }
 }

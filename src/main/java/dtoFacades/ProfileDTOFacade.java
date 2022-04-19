@@ -58,4 +58,8 @@ public class ProfileDTOFacade implements IFacade<ProfileDTO> {
     public ProfileDTO delete(int id) throws EntityNotFoundException {
         return new ProfileDTO(profileFacade.delete(id));
     }
+
+    public ProfileDTO addRelation(int id1, int id2) throws EntityNotFoundException {
+       return new ProfileDTO(profileFacade.addRelation(id1, id2));
+    }
 }

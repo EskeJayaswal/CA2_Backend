@@ -1,25 +1,30 @@
 package entities;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.*;
 
 
 @Entity
+@Table(name = "RENAMEME")
 @NamedQuery(name = "RenameMe.deleteAllRows", query = "DELETE from RenameMe")
 public class RenameMe implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     // TODO, delete this class, or rename to an Entity class that makes sense for what you are about to do
     // Delete EVERYTHING below if you decide to use this class, it's dummy data used for the initial demo
+    @Column(name = "dummyStr1")
     private String dummyStr1;
+    @Column(name = "dummyStr2")
     private String dummyStr2;
+
+    @ManyToMany(mappedBy="renameMesList")
+    private List<Profile> profileList;
     
     public RenameMe() {
     }  
@@ -27,13 +32,14 @@ public class RenameMe implements Serializable {
     public RenameMe(String dummyStr1, String dummyStr2) {
         this.dummyStr1 = dummyStr1;
         this.dummyStr2 = dummyStr2;
+        profileList = new ArrayList<>();
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
     
@@ -52,9 +58,25 @@ public class RenameMe implements Serializable {
     public void setDummyStr2(String dummyStr2) {
         this.dummyStr2 = dummyStr2;
     }
-    
-    
-    
 
-   
+    public List<Profile> getProfileList() {
+        return profileList;
+    }
+
+    public void addProfile(Profile profile) {
+        this.profileList.add(profile);
+        if(!profile.getRenameMesList().contains(this)){
+            profile.addRenameMe(this);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "RenameMe{" +
+                "id=" + id +
+                ", dummyStr1='" + dummyStr1 + '\'' +
+                ", dummyStr2='" + dummyStr2 + '\'' +
+                ", profileList=" + profileList +
+                '}';
+    }
 }

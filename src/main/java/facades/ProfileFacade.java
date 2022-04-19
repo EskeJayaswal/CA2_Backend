@@ -1,7 +1,10 @@
 package facades;
 
+import dtos.ProfileDTO;
 import entities.Profile;
+import entities.RenameMe;
 import errorhandling.EntityNotFoundException;
+import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -11,6 +14,7 @@ import java.util.List;
 public class ProfileFacade implements IFacade<Profile>{
 
     private static ProfileFacade instance;
+    private static IFacade<RenameMe> renameMeFacade;
     private static EntityManagerFactory emf;
 
     //Private Constructor to ensure Singleton
@@ -23,7 +27,9 @@ public class ProfileFacade implements IFacade<Profile>{
     public static IFacade<Profile> getFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
+            renameMeFacade = RenameMeFacade.getFacade(EMF_Creator.createEntityManagerFactory());
             instance = new ProfileFacade();
+
         }
         return instance;
     }
@@ -85,5 +91,27 @@ public class ProfileFacade implements IFacade<Profile>{
         em.remove(p);
         em.getTransaction().commit();
         return p;
+    }
+
+    @Override
+    public Profile addRelation(int id1, int id2) throws EntityNotFoundException {
+        EntityManager em = emf.createEntityManager();
+        try{
+            Profile profile = em.find(Profile.class,id1);
+            if(profile == null){
+                throw new EntityNotFoundException("profile with ID: " + id1  + " not found");
+            }
+            RenameMe renameMe = em.find(RenameMe.class,id2);
+            if(renameMe == null){
+                throw new EntityNotFoundException("XXX with ID: " + id2  + " not found");
+            }
+            profile.addRenameMe(renameMe);
+            em.getTransaction().begin();
+            Profile updated = em.merge(profile);
+            em.getTransaction().commit();
+            return updated;
+        } finally {
+            em.close();
+        }
     }
 }

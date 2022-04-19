@@ -60,4 +60,12 @@ public class ProfileResource {
         ProfileDTO deleted = FACADE.delete(id);
         return Response.ok().entity(GSON.toJson(deleted)).build();
     }
+
+    @PUT
+    @Path("/addrenameme/{profileid}/{renamemeid}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response addHobby(@PathParam("profileid") int id1, @PathParam("renamemeid") int id2) throws EntityNotFoundException {
+        ProfileDTO updated = FACADE.addRelation(id1, id2);
+        return Response.ok().entity(GSON.toJson(updated)).build();
+    }
 }

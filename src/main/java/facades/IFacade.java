@@ -8,4 +8,5 @@ public interface IFacade<T> {
     List<T> getAll();
     T update(T t) throws EntityNotFoundException;
     T delete(int id) throws EntityNotFoundException;
+    T addRelation(int id1, int id2) throws EntityNotFoundException;
 }

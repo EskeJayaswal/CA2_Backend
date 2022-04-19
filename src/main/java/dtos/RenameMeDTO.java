@@ -5,37 +5,38 @@
  */
 package dtos;
 
+import entities.Profile;
 import entities.RenameMe;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-/**
- *
- * @author tha
- */
+
 public class RenameMeDTO {
-    private long id;
+    private int id;
     private String str1;
     private String str2;
-
-    public RenameMeDTO(String dummyStr1, String dummyStr2) {
-        this.str1 = dummyStr1;
-        this.str2 = dummyStr2;
-    }
-    
-    public static List<RenameMeDTO> getDtos(List<RenameMe> rms){
-        List<RenameMeDTO> rmdtos = new ArrayList();
-        rms.forEach(rm->rmdtos.add(new RenameMeDTO(rm)));
-        return rmdtos;
-    }
+    private List<ProfileDTO> profiles = new ArrayList<>();
 
 
-    public RenameMeDTO(RenameMe rm) {
-        if(rm.getId() != null)
-            this.id = rm.getId();
-        this.str1 = rm.getDummyStr1();
-        this.str2 = rm.getDummyStr2();
+    public RenameMeDTO(RenameMe rme) {
+        if(rme.getId() != 0)
+            this.id = rme.getId();
+        this.str1 = rme.getDummyStr1();
+        this.str2 = rme.getDummyStr2();
+        rme.getProfileList().forEach(profile -> this.profiles.add(new ProfileDTO(profile)));
     }
+    // TODO: Might need to do something about the userName!?
+    public RenameMe getEntity() {
+        RenameMe r = new RenameMe(this.str1, this.str2);
+        this.profiles.forEach(profile -> r.addProfile(profile.getEntity()));
+        return r;
+    }
+    public static List<RenameMeDTO> toList(List<RenameMe> rms) {
+        return rms.stream().map(RenameMeDTO::new).collect(Collectors.toList());
+    }
+
+
 
     public String getDummyStr1() {
         return str1;
@@ -51,6 +52,14 @@ public class RenameMeDTO {
 
     public void setDummyStr2(String dummyStr2) {
         this.str2 = dummyStr2;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

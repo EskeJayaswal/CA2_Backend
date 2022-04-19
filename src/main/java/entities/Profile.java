@@ -3,6 +3,7 @@ package entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,10 +30,18 @@ public class Profile implements Serializable {
     @OneToOne(mappedBy = "profile")
     private User user;
 
+    @JoinTable(
+            name = "profile_RENAMEME",
+            joinColumns = @JoinColumn(name = "profile_id"),
+            inverseJoinColumns = @JoinColumn(name = "RENAMEME_id"))
+    @ManyToMany
+    private List<RenameMe> renameMesList;
+
     public Profile(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        renameMesList = new ArrayList<>();
     }
 
     public Profile() {
@@ -78,4 +87,17 @@ public class Profile implements Serializable {
         this.user = user;
         user.setProfile(this);
     }
+
+    public List<RenameMe> getRenameMesList() {
+        return renameMesList;
+    }
+
+    public void addRenameMe(RenameMe renameMe) {
+        this.renameMesList.add(renameMe);
+        if(!renameMe.getProfileList().contains(this)){
+            renameMe.addProfile(this);
+        }
+
+    }
+
 }

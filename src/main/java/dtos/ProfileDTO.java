@@ -12,7 +12,7 @@ public class ProfileDTO {
     private String firstName;
     private String lastName;
     private String email;
-//    private List<RenameMeDTO> renameMeDTOS = new ArrayList<>();
+    private List<Integer> renameMeIDs = new ArrayList<>(); // List of IDs.
 
 
     public ProfileDTO(Profile profile) {
@@ -21,7 +21,7 @@ public class ProfileDTO {
         this.firstName = profile.getFirstName();
         this.lastName = profile.getLastName();
         this.email = profile.getEmail();
-//        movie.getUserList().forEach(user -> this.users.add(new UserDTO(user)));
+        profile.getRenameMesList().forEach(renameMe->this.renameMeIDs.add(renameMe.getId()));
     }
 
     // TODO: Might need to do something about the userName!?
@@ -69,4 +69,7 @@ public class ProfileDTO {
         this.email = email;
     }
 
+    public List<Integer> getRenameMeIDs() {
+        return renameMeIDs;
+    }
 }

@@ -9,6 +9,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
 
 //Todo Remove or change relevant parts before ACTUAL use
 @Path("xxx")
@@ -33,4 +34,12 @@ public class RenameMeResource {
         //System.out.println("--------------->"+count);
         return "{\"count\":"+count+"}";  //Done manually so no need for a DTO
     }
+
+    @Path("data")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getExampleData() throws IOException {
+        return FACADE.getExampleData();
+    }
+
 }

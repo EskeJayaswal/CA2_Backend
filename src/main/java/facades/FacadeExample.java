@@ -1,5 +1,6 @@
 package facades;
 
+import com.google.gson.Gson;
 import dtos.RenameMeDTO;
 import entities.RenameMe;
 
@@ -8,6 +9,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.core.Response;
 
 //import errorhandling.RenameMeNotFoundException;
 import utils.EMF_Creator;
@@ -42,8 +44,18 @@ public class FacadeExample {
         String data1 = Utility.fetchData("https://api.punkapi.com/v2/beers/1");
         String data2 = Utility.fetchData("https://icanhazdadjoke.com");
 
-        return data1 + "\n" + data2;
+        data1 = data1.substring(0, data1.length() - 1);
+        data1 = data1.substring(0, data1.length() - 1);
 
+        return data1 + ", \"joke\": " + data2 + "}]";
+
+    }
+
+    public String getCocktailNames() throws IOException {
+
+        String name = Utility.fetchData("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=all");
+
+        return name;
     }
 
     public RenameMeDTO create(RenameMeDTO rm){

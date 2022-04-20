@@ -1,5 +1,7 @@
 package facades;
 
+import entities.Profile;
+import entities.Role;
 import entities.User;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -16,11 +18,7 @@ public class UserFacade {
     private UserFacade() {
     }
 
-    /**
-     *
-     * @param _emf
-     * @return the instance of this facade.
-     */
+
     public static UserFacade getUserFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
@@ -28,6 +26,13 @@ public class UserFacade {
         }
         return instance;
     }
+
+
+    private EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+
 
     public User getVeryfiedUser(String username, String password) throws AuthenticationException {
         EntityManager em = emf.createEntityManager();
@@ -43,16 +48,20 @@ public class UserFacade {
         return user;
     }
 
-    // TODO: Is this a bad safety issue?
-    public User getUserByUserName(String username) {
-        EntityManager em = emf.createEntityManager();
-        User user;
+
+    public User create(User user, Profile profile) {
+        EntityManager em = getEntityManager();
+        Role role = em.find(Role.class, "user");
+        user.addRole(role);
+        user.setProfile(profile);
         try {
-            user = em.find(User.class, username);
+            em.getTransaction().begin();
+            em.persist(user);
+            em.getTransaction().commit();
+
         } finally {
             em.close();
         }
         return user;
     }
-
 }

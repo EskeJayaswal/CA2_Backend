@@ -1,10 +1,8 @@
 package facades;
 
-import dtos.ProfileDTO;
 import entities.Profile;
 import entities.RenameMe;
 import errorhandling.EntityNotFoundException;
-import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,7 +12,6 @@ import java.util.List;
 public class ProfileFacade implements IFacade<Profile>{
 
     private static ProfileFacade instance;
-    private static IFacade<RenameMe> renameMeFacade;
     private static EntityManagerFactory emf;
 
     //Private Constructor to ensure Singleton
@@ -27,7 +24,6 @@ public class ProfileFacade implements IFacade<Profile>{
     public static IFacade<Profile> getFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
-            renameMeFacade = RenameMeFacade.getFacade(EMF_Creator.createEntityManagerFactory());
             instance = new ProfileFacade();
 
         }
@@ -73,7 +69,6 @@ public class ProfileFacade implements IFacade<Profile>{
         p.setFirstName(profile.getFirstName());
         p.setLastName(profile.getLastName());
         p.setEmail(profile.getEmail());
-
 
         em.getTransaction().begin();
         Profile updated = em.merge(profile);
@@ -131,7 +126,6 @@ public class ProfileFacade implements IFacade<Profile>{
 
             em.getTransaction().begin();
             Profile updated = em.merge(profile);
-//            em.merge(renameMe);
             em.getTransaction().commit();
             return updated;
         } finally {

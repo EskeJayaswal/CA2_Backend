@@ -1,6 +1,5 @@
 package rest;
 
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -12,7 +11,6 @@ import facades.IFacade;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 
 @Path("profile")
 public class ProfileResource {
@@ -49,7 +47,6 @@ public class ProfileResource {
     public Response update(@PathParam("id") int id, String content) throws EntityNotFoundException {
         ProfileDTO pdto = GSON.fromJson(content, ProfileDTO.class);
         pdto.setId(id);
-        System.out.println(pdto);
         ProfileDTO updated = FACADE.update(pdto);
         return Response.ok().entity(GSON.toJson(updated)).build();
     }

@@ -1,19 +1,12 @@
 package dtoFacades;
 
-import dtos.ProfileDTO;
 import dtos.RenameMeDTO;
-import entities.Profile;
 import entities.RenameMe;
-import entities.User;
 import errorhandling.EntityNotFoundException;
 import facades.IFacade;
-import facades.ProfileFacade;
 import facades.RenameMeFacade;
-import facades.UserFacade;
 import utils.EMF_Creator;
 import utils.Utility;
-
-import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.util.List;
 
@@ -40,10 +33,7 @@ public class RenameMeDTOFacade implements IFacade<RenameMeDTO> {
         String data2 = Utility.fetchData("https://icanhazdadjoke.com");
 
         return data1 + "\n" + data2;
-
     }
-
-
 
     @Override
     public RenameMeDTO create(RenameMeDTO renameMeDTO) {

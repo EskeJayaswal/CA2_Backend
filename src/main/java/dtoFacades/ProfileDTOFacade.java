@@ -62,4 +62,9 @@ public class ProfileDTOFacade implements IFacade<ProfileDTO> {
     public ProfileDTO removeRelation(int id1, int id2) throws EntityNotFoundException {
         return new ProfileDTO(profileFacade.removeRelation(id1, id2));
     }
+
+    @Override
+    public long getCount() {
+        return profileFacade.getCount();
+    }
 }

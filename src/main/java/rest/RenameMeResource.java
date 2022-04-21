@@ -2,15 +2,11 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dtoFacades.ProfileDTOFacade;
 import dtoFacades.RenameMeDTOFacade;
-import dtos.ProfileDTO;
 import dtos.RenameMeDTO;
 import errorhandling.EntityNotFoundException;
 import facades.IFacade;
-import utils.EMF_Creator;
-import facades.FacadeExample;
-import javax.persistence.EntityManagerFactory;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -80,6 +76,14 @@ public class RenameMeResource {
     public Response delete(@PathParam("id") int id) throws EntityNotFoundException {
         RenameMeDTO deleted = FACADE.delete(id);
         return Response.ok().entity(GSON.toJson(deleted)).build();
+    }
+
+    @GET
+    @Path("count")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getCount()  {
+        long count = FACADE.getCount();
+        return "{\"count\":"+count+"}";  //Done manually so no need for a DTO
     }
 
 }

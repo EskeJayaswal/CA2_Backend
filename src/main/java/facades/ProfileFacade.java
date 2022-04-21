@@ -69,11 +69,13 @@ public class ProfileFacade implements IFacade<Profile>{
         p.setFirstName(profile.getFirstName());
         p.setLastName(profile.getLastName());
         p.setEmail(profile.getEmail());
+        p.setRenameMesList(profile.getRenameMesList());
+
 
         em.getTransaction().begin();
-        Profile updated = em.merge(profile);
+        Profile updated = em.merge(p);
         em.getTransaction().commit();
-        return updated;
+        return profile;
     }
 
     @Override
@@ -129,6 +131,17 @@ public class ProfileFacade implements IFacade<Profile>{
             em.getTransaction().commit();
             return updated;
         } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public long getCount() {
+        EntityManager em = getEntityManager();
+        try{
+            long renameMeCount = (long)em.createQuery("SELECT COUNT(p) FROM Profile p").getSingleResult();
+            return renameMeCount;
+        }finally{
             em.close();
         }
     }

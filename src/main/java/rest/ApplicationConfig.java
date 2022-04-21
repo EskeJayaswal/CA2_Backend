@@ -1,5 +1,7 @@
 package rest;
 
+import errorhandling.EntityNotFoundExceptionMapper;
+
 import java.util.Set;
 import javax.ws.rs.core.Application;
 
@@ -19,11 +21,15 @@ public class ApplicationConfig extends Application {
      * all resources defined in the project.
      * If required, comment out calling this method in getClasses().
      */
+
+    // TODO: Remember to add newly created ExceptionMappers and Resources here.
+
     private void addRestResourceClasses(Set<Class<?>> resources) {
 
         resources.add(cors.CorsFilter.class);
         resources.add(errorhandling.API_ExceptionMapper.class);
         resources.add(errorhandling.GenericExceptionMapper.class);
+        resources.add(EntityNotFoundExceptionMapper.class);
         resources.add(org.glassfish.jersey.server.wadl.internal.WadlResource.class);
         resources.add(rest.DemoResource.class);
         resources.add(rest.RenameMeResource.class);

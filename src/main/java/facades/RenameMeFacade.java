@@ -42,6 +42,7 @@ public class RenameMeFacade implements IFacade<RenameMe>{
         return renameMe;
     }
 
+
     @Override
     public RenameMe getById(int id) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
@@ -94,5 +95,16 @@ public class RenameMeFacade implements IFacade<RenameMe>{
     @Override
     public RenameMe removeRelation(int id1, int id2) throws EntityNotFoundException {
         return null;
+    }
+
+    @Override
+    public long getCount() {
+        EntityManager em = getEntityManager();
+        try{
+            long renameMeCount = (long)em.createQuery("SELECT COUNT(r) FROM RenameMe r").getSingleResult();
+            return renameMeCount;
+        }finally{
+            em.close();
+        }
     }
 }

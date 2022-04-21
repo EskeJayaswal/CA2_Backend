@@ -32,7 +32,7 @@ public class RenameMe implements Serializable {
     public RenameMe(String dummyStr1, String dummyStr2) {
         this.dummyStr1 = dummyStr1;
         this.dummyStr2 = dummyStr2;
-        profileList = new ArrayList<>();
+        this.profileList = new ArrayList<>();
     }
 
     public int getId() {

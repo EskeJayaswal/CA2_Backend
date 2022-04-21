@@ -23,6 +23,4 @@ public class DataResource {
     public String getCount() throws IOException {
         return FACADE.getRandomQuote();
     }
-
-
 }

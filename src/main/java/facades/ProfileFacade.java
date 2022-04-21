@@ -3,7 +3,6 @@ package facades;
 import entities.Profile;
 import entities.RenameMe;
 import errorhandling.EntityNotFoundException;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
@@ -25,7 +24,6 @@ public class ProfileFacade implements IFacade<Profile>{
         if (instance == null) {
             emf = _emf;
             instance = new ProfileFacade();
-
         }
         return instance;
     }

@@ -5,12 +5,7 @@ import entities.Role;
 import entities.User;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.TypedQuery;
-
 import security.errorhandling.AuthenticationException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserFacade {
 
@@ -20,7 +15,6 @@ public class UserFacade {
     private UserFacade() {
     }
 
-
     public static UserFacade getUserFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
@@ -29,11 +23,9 @@ public class UserFacade {
         return instance;
     }
 
-
     private EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-
 
 
     public User getVeryfiedUser(String username, String password) throws AuthenticationException {
@@ -66,6 +58,4 @@ public class UserFacade {
         }
         return user;
     }
-
-
 }

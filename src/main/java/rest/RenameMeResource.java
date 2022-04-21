@@ -34,7 +34,6 @@ public class RenameMeResource {
         return RenameMeDTOFacade.getExampleData();
     }
 
-
     //TODO: Change these
 
     @GET
@@ -85,5 +84,4 @@ public class RenameMeResource {
         long count = FACADE.getCount();
         return "{\"count\":"+count+"}";  //Done manually so no need for a DTO
     }
-
 }

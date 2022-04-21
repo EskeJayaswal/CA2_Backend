@@ -1,9 +1,7 @@
 package facades;
 
-import entities.Profile;
 import entities.RenameMe;
 import errorhandling.EntityNotFoundException;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
@@ -28,7 +26,6 @@ public class RenameMeFacade implements IFacade<RenameMe>{
         return instance;
     }
 
-
     @Override
     public RenameMe create(RenameMe renameMe) {
         EntityManager em = getEntityManager();
@@ -41,7 +38,6 @@ public class RenameMeFacade implements IFacade<RenameMe>{
         }
         return renameMe;
     }
-
 
     @Override
     public RenameMe getById(int id) throws EntityNotFoundException {

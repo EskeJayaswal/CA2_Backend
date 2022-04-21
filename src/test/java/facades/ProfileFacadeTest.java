@@ -13,7 +13,7 @@ import javax.persistence.EntityManagerFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//@Disabled
+@Disabled
 class ProfileFacadeTest {
     private static EntityManagerFactory emf;
     private static IFacade<Profile> facade;

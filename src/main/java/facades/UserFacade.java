@@ -5,7 +5,12 @@ import entities.Role;
 import entities.User;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
+
 import security.errorhandling.AuthenticationException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserFacade {
 
@@ -61,4 +66,6 @@ public class UserFacade {
         }
         return user;
     }
+
+
 }

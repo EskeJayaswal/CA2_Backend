@@ -9,11 +9,9 @@ import utils.EMF_Creator;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-
-
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled
+
 class ProfileFacadeTest {
     private static EntityManagerFactory emf;
     private static IFacade<Profile> facade;
@@ -28,11 +26,6 @@ class ProfileFacadeTest {
 
     }
 
-    // Clean up database after test is done or use a persistence unit with drop-and-create to start up clean on every test
-    @AfterAll
-    public static void tearDownClass() {
-        emf.close();
-    }
 
     // Setup the DataBase in a known state BEFORE EACH TEST
     @BeforeEach
